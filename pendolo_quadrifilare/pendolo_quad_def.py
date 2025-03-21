@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
 
 # carica il file con i dati
-dati = np.loadtxt("C:\\Users\\15ADA05-8EIX\\Desktop\\theo hernandez\\seconda30.txt")#ah ricordati di mettere doppia \\ quando incolli il nuovo percorso file perche python non prende la singola
+dati = np.loadtxt(...il percorso pper arrivare ak vstro file)#ah ricordati di mettere doppia \\ quando incolli il nuovo percorso file perche python non prende la singola
 #secondo me seconda30 è il miglior set di dati poi vedete anche voi sperimentate...
 # estrai la i-esima colonna
 
