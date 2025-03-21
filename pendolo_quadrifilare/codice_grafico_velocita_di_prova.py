@@ -1,3 +1,4 @@
+#mic check mic check
 #pendolo quadrifilare alternativo
 import numpy as np
 import matplotlib
