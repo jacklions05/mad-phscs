@@ -1,0 +1,12 @@
+#queste correzioni per il fit sono pre entrambe le 2 esperienze pero anche con il fit normale dovrebbe andre bene lo stesso
+
+import numpy as np
+import matplotlib
+from matplotlib import pyplot as plt
+from scipy.optimize import curve_fit
+
+i=np.array(4.2,17.5,26.5,31,36.5,37,)
+r=np.array(3,12,18,21,24,25,)
+
+def f(i,r,m):
+return i=m*r
