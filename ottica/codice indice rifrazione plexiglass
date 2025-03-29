@@ -13,10 +13,7 @@ r di quelli rifratti
 """
 i = np.array([3, 6, 9, 12, 15, 18, 21, 24, 25, 20.5, 17.5, 14, 1.9, 18, 8.7, 6, 15, 21.7, 24.8,  ])
 r = np.array([4.5, 8.5, 13, 17.5, 22, 26.6, 31, 35.5, 37.5, 30.5, 25.6, 21, 2.6, 26.5, 13 , 8.5, 22, 32, 37 ])
-"""
-print(len(i))
-print(len(r))
-"""
+
 #l'errore di i è uguale a quello di r , (errore di misura dei quadratini)
 d = np.full(r.shape, 0.2,)
 
@@ -31,14 +28,30 @@ fit = odr.ODR(dati, modello, beta0=[1.48 , 0])
 output= fit.run()
 m, q =output.beta
 m_err, q_err = output.sd_beta
-#grafico
-plt.errorbar(i, r , xerr=d ,yerr=d, fmt="o", label="Dati" )
-#per vedere bene le barre
-#plt.gca().set_aspect('equal', adjustable='datalim')
-#non serve
-plt.plot(i, line(output.beta, i), "r-", label=f'Fit: y = ({m:.2f} ± {m_err:.2f})x + ({q:.2f} ± {q_err:.2f})')
 
-plt.legend()
+# Calcolo dei residui
+r_fit = line(output.beta, i)
+residui = r - r_fit
+
+# Creazione dei due subplot (2 righe, 1 colonna)
+fig, axs = plt.subplots(2, 1, figsize=(8, 10), gridspec_kw={'height_ratios': [3, 1]})
+
+# Grafico dati e fit
+axs[0].errorbar(i, r, xerr=d, yerr=d, fmt="o", label="Dati")
+axs[0].plot(i, r_fit, "r-", label=f'Fit: y = ({m:.2f} ± {m_err:.2f})x + ({q:.2f} ± {q_err:.2f})')
+axs[0].set_ylabel("r (sen θ rifratto)")
+axs[0].legend()
+axs[0].set_title("Fit dati rifrazione")
+
+# Grafico dei residui
+axs[1].errorbar(i, residui, yerr=d, fmt="o", color="black", label="Residui")
+axs[1].axhline(0, color="red", linestyle="--")
+axs[1].set_xlabel("i (sen θ incidente)")
+axs[1].set_ylabel("Residui (r - r_fit)")
+axs[1].legend()
+axs[1].set_title("Grafico dei residui")
+
+plt.tight_layout()  # Ottimizza la disposizione dei grafici
 plt.show()
 
 """
