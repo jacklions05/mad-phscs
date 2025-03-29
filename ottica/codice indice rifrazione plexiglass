@@ -1,0 +1,53 @@
+import numpy as np
+import matplotlib
+from matplotlib import pyplot as plt
+import scipy.odr as odr
+
+#come si deve da qui è stato realizzato con il pacchetto odr
+
+#indice rifraziojne pexiglass
+#l'unita di misura è in quadretti
+"""
+i sono le misure dei seni dei raggi incidenti
+r di quelli rifratti
+"""
+i = np.array([3, 6, 9, 12, 15, 18, 21, 24, 25, 20.5, 17.5, 14, 1.9, 18, 8.7, 6, 15, 21.7, 24.8,  ])
+r = np.array([4.5, 8.5, 13, 17.5, 22, 26.6, 31, 35.5, 37.5, 30.5, 25.6, 21, 2.6, 26.5, 13 , 8.5, 22, 32, 37 ])
+"""
+print(len(i))
+print(len(r))
+"""
+#l'errore di i è uguale a quello di r , (errore di misura dei quadratini)
+d = np.full(r.shape, 0.2,)
+
+def line(B, r):
+    return B[0] * r + B[1]
+#imposto il fit con odr
+modello  = odr.Model(line)
+dati = odr.RealData(i, r, sx=d, sy=d)
+fit = odr.ODR(dati, modello, beta0=[1.48 , 0])
+
+#famo ir fitte
+output= fit.run()
+m, q =output.beta
+m_err, q_err = output.sd_beta
+#grafico
+plt.errorbar(i, r , xerr=d ,yerr=d, fmt="o", label="Dati" )
+#per vedere bene le barre
+#plt.gca().set_aspect('equal', adjustable='datalim')
+#non serve
+plt.plot(i, line(output.beta, i), "r-", label=f'Fit: y = ({m:.2f} ± {m_err:.2f})x + ({q:.2f} ± {q_err:.2f})')
+
+plt.legend()
+plt.show()
+
+"""
+questa parte di codice è per il grafico senza il fit
+plt.plot(i, r, "o",label="n plexi", color="c")
+plt.xlabel('Lunghezza (X)')
+plt.ylabel('Tempo Medio (Y)')
+plt.title('sen i (X) sen r (Y) c')
+plt.legend()
+plt.grid(True)
+plt.show()
+"""
