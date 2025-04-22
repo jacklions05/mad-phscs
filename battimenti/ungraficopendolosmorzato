@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib
+from matplotlib import pyplot as plt
+from scipy.optimize import curve_fit
+
+dati = np.loadtxt("C:\\Users\\...\\tungsahur\\smorzato2.txt") #percorso al file mi racconado doppio\\
+"""
+ 1. il tempo t1, dall’inizio dell’acquisizione, a cui ` e stata campionata la posizione del primo pendolo;
+ 2. la posizione del primo pendolo all’istante t1;
+ 3. il tempo t2, dall’inizio dell’acquisizione, a cui `e stata campionata la posizione del secondo pendolo;
+ 4. la posizione del secondo pendolo all’istante t2;
+"""
+
+t = dati[:, 2]
+p = dati[:, 3]
+
+
+# Crea il grafico
+plt.plot(t, p, label="gg", color="b")
+
+# Aggiungi griglia, titolo e legenda
+plt.grid(True)
+plt.title("Grafico della funzione f(x)")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+
+# Mostra il grafico
+plt.show()
