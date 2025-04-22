@@ -1,3 +1,5 @@
+#questo per vedere i grafici senza dover usare il programma del pc di lab
+
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
